@@ -1,0 +1,66 @@
+<ng-container *ngIf="!inCaptchaStatisticsView; else captchaStatistics">
+  <main>
+    <div>
+      <h1>{{ project.name }}</h1>
+      <button mat-button>Editar</button>
+    </div>
+    <div class="content">
+      <img src="" />
+      <ng-container *ngIf="project.description">
+        <p>{{ project.description }}</p>
+      </ng-container>
+      <h3>Acertijos asociados</h3>
+      <hr />
+      <div>
+        <div *ngFor="let captcha of project.catpchas">
+          {{ captcha.name }}
+        </div>
+        <button mat-icon-button><mat-icon>add</mat-icon>></button>
+      </div>
+    </div>
+    <div>
+      <h3>Datos del proyecto</h3>
+      <div>
+        <img src="" alt="graph" />
+        <div>
+          <div>
+            <p>Respuestas hasta la fecha</p>
+            0
+          </div>
+          <button mat-button>Generar informe</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</ng-container>
+
+<ng-template #captchaStatistics>
+  <main>
+    <button
+      mat-icon-button
+      (click)="this.captcha = undefined; this.inCaptchaStatisticsView = false"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div>
+      <div>PRev captcha</div>
+      <div>
+        <h2>Estadísticas del acertijo "{{ captcha.name }}"</h2>
+        <div>
+          <img src="" />
+          <img src="" />
+          <img src="" />
+          <div>
+            <p>Respuestas hasta la fecha</p>
+            <p>0</p>
+          </div>
+        </div>
+        <div>
+          <h3>Reportes de errores</h3>
+          <div>Errores</div>
+        </div>
+      </div>
+    </div>
+    <button mat-button>Generar informe</button>
+  </main>
+</ng-template>

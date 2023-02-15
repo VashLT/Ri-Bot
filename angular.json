@@ -1,16 +1,12 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ribot": {
+    "RiBOT": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
         }
       },
       "root": "",
@@ -20,18 +16,25 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ribot",
+            "outputPath": "dist/UIS",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
+            "allowedCommonJsDependencies": [
+              "xlsx/dist/xlsx.mini.min",
+              "xlsx"
+            ],
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
-              "src/styles.scss"
+              "./node_modules/flexboxgrid/dist/flexboxgrid.min.css",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.scss",
+              "src/theme/theme.scss"
             ],
             "scripts": []
           },
@@ -57,33 +60,33 @@
               ],
               "outputHashing": "all"
             },
-            "development": {
+            "local": {
               "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
+              "vendorChunk": false,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
-            }
-          },
+            },
           "defaultConfiguration": "production"
+          }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ribot:build:production"
+              "browserTarget": "RiBOT:build:production"
             },
-            "development": {
-              "browserTarget": "ribot:build:development"
+            "local": {
+              "browserTarget": "RiBOT:build:local"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "local"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ribot:build"
+            "browserTarget": "RiBOT:build"
           }
         },
         "test": {
@@ -92,20 +95,61 @@
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "inlineStyleLanguage": "scss",
+            "karmaConfig": "src/karma-confs-tests/karma.conf-local.js",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
-              "src/styles.scss"
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.scss",
+              "src/theme/theme.scss"
             ],
             "scripts": []
+          },
+          "configurations": {
+            "local": {
+              "karmaConfig": "src/karma-confs-tests/karma.conf-local.js"
+            },
+            "predev": {
+              "karmaConfig": "src/karma-confs-tests/karma.conf-predev.js"
+            },
+            "develop": {
+              "karmaConfig": "src/karma-confs-tests/karma.conf-develop.js"
+            },
+            "preprod": {
+              "karmaConfig": "src/karma-confs-tests/karma.conf-preprod.js"
+            },
+            "production": {
+              "karmaConfig": "src/karma-confs-tests/karma.conf-production.js"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
     }
   },
-  "defaultProject": "ribot"
+  "cli": {
+    "analytics": false,
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
+  },
+  "schematics": {
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
+    }
+  }
 }

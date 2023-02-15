@@ -1,0 +1,109 @@
+@import "../../../variables.scss";
+
+$menu-width: 186px;
+
+:host {
+    --avatar-size: 32px;
+    --navbar-height: 104px;
+    --button-height: 64px;
+    display: flex;
+    & .header {
+        height: var(--navbar-height);
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+
+        padding: 24px 32px 0px;
+        margin-bottom: 16px;
+        column-gap: 32px;
+
+        background-color: transparent;
+
+        & button {
+            height: var(--button-height);
+            width: var(--button-height);
+            border: 1px solid $primary;
+            border-radius: 10px;
+        }
+
+        & .user {
+            & img {
+                width: var(--avatar-size);
+                height: var(--avatar-size);
+            }
+        }
+
+        & .logo {
+            height: 64px;
+            width: auto;
+            cursor: pointer;
+        }
+
+        & .filter {
+            display: inline;
+            margin-left: auto;
+
+            &  mat-form-field {
+                width: 250px;
+            }
+        }
+
+        & .c-menus {
+            display: flex;
+            align-items: center;
+            border-radius: $border-radius--button;
+            background-color: $primary;
+            transition: width 1s linear;
+            & button {
+                background-color: $primary;
+                & mat-icon {
+                    color: white;
+                }
+            }
+
+            & a {
+                display: inline-flex;
+                height: 80%;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                color: white;
+                margin-left: 16px;
+                width: $menu-width;
+                column-gap: 8px;
+
+                & mat-icon {
+                    vertical-align: middle;
+                    color: white;
+                }
+
+                & .when-open {
+                    display: none;
+                }
+
+                &[aria-expanded] {
+                    & .when-close {
+                        display: none;
+                    }
+
+                    & .when-open {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+}
+
+::ng-deep .mat-menu-panel.navbar-projects-menu {
+    background-color: $primary;
+    color: white;
+    .mat-menu-content {
+        width: calc(#{$menu-width} + 16px);
+        padding: 16px 8px;
+        & .empty {
+            text-align: center;
+        }
+    }
+}

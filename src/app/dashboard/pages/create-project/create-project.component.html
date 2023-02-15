@@ -1,0 +1,298 @@
+<ng-container *ngIf="!inAddCaptchaView; else selectCategories">
+  <h1 class="title">Para crear un proyecto siga los siguientes pasos</h1>
+  <form [formGroup]="form">
+    <div class="field">
+      <h3>Nombre del proyecto</h3>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          placeholder="Escribe aquí..."
+          formControlName="projectName"
+        />
+        <mat-error *ngIf="form.controls.projectName.hasError('required')"
+          >El valor de este campo no es válido</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <div class="field">
+        <h3>Descripción del proyecto</h3>
+        <mat-form-field appearance="outline">
+          <input
+            matInput
+            placeholder="Escribe aquí..."
+            formControlName="projectDesc"
+          />
+        </mat-form-field>
+      </div>
+      <div class="field">
+        <h3>Imágen del proyecto</h3>
+        <!-- <mat-form-field>
+          <input
+            type="file"
+            placeholder="Arrastrar y soltar aquí o navegar"
+            formControlName="projectImage"
+          />
+        </mat-form-field> -->
+      </div>
+    </div>
+    <div class="c-add-captcha">
+      <h3>Agregar acertijo</h3>
+      <div class="content">
+        <div *ngFor="let captcha of captchas" class="c-captcha">
+          <div class="name" [alt]="captcha.name">
+            <p class="ellipsis-2">{{ captcha.name }}</p>
+          </div>
+          <span>
+            <p>Número de respuestas</p>
+            <em>0</em>
+          </span>
+        </div>
+        <div
+          class="add-captcha {{ this.captchas.length > 0 ? 'side' : 'center' }}"
+        >
+          <ng-container *ngIf="addingCaptcha; else addButton">
+            <button class="action-btn" mat-button (click)="goToAddNewCaptcha()">
+              <mat-icon>library_add</mat-icon>
+              Acertijo nuevo
+            </button>
+            <button class="action-btn" mat-button>
+              <mat-icon>library_books</mat-icon>
+              Acertijo existente
+            </button>
+          </ng-container>
+          <ng-template #addButton>
+            <button
+              class="add-btn"
+              mat-icon-button
+              (click)="this.addingCaptcha = !this.addingCaptcha"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="c-actions">
+      <button mat-button class="secondary">Cancelar</button>
+      <button
+        mat-button
+        class="primary"
+        [disabled]="form.invalid"
+        (click)="saveProject()"
+      >
+        Guardar Proyecto
+      </button>
+    </div>
+  </form>
+</ng-container>
+
+<ng-template #selectCategories>
+  <ng-container *ngIf="!inCreateCaptchaView; else createCaptcha">
+    <button
+      class="btn-back"
+      mat-icon-button
+      (click)="this.inAddCaptchaView = false"
+      title="Atrás"
+    >
+      <mat-icon>west</mat-icon>
+    </button>
+    <h1 class="title">Seleccione la categoría del acertijo</h1>
+    <div class="c-category">
+      <div (click)="this.selectedCategory = 1" class="category">
+        <div class="header">
+          <p class="ellipsis-2">Lúdicos</p>
+        </div>
+        <div class="content">
+          <div class="c-pic">
+            <img src="/assets/images/image.png" />
+            <img src="/assets/images/image.png" />
+            <img src="/assets/images/image.png" />
+            <p>...</p>
+          </div>
+          <div class="row-pic">
+            <img src="/assets/images/image.png" />
+            <img src="/assets/images/image.png" />
+            <img src="/assets/images/image.png" />
+          </div>
+        </div>
+        <p>Crea acertijos interactivos, basados en asociación</p>
+      </div>
+      <div class="category disabled">
+        <div class="header">
+          <p class="ellipsis-2">Visuales</p>
+        </div>
+        <div class="content on-boarding">
+          <div class="c-pic">
+            <img src="/assets/images/image.png" />
+            <img src="/assets/images/image.png" />
+            <img src="/assets/images/image.png" />
+          </div>
+        </div>
+        <p>Crea Acertijos con múltiples imagenes</p>
+      </div>
+      <div class="category disabled">
+        <div class="header">
+          <p class="ellipsis-2">Textuales</p>
+        </div>
+        <div class="content">
+          <div class="c-pic text">
+            <b>Cuestionario</b>
+            <div class="option">
+              <mat-icon>radio_button_checked</mat-icon>
+              Respuesta 1
+            </div>
+            <div class="option">
+              <mat-icon>radio_button_checked</mat-icon>
+              Respuesta 2
+            </div>
+            <div class="option">
+              <mat-icon>radio_button_checked</mat-icon>
+              Respuesta 3
+            </div>
+          </div>
+        </div>
+        <p>Crea Acertijos de tipo pregunta</p>
+      </div>
+    </div>
+    <ng-container *ngIf="selectedCategory">
+      <ng-container *ngIf="selectedCategory === 1; else visualType">
+        <div (click)="this.inCreateCaptchaView = true">Posición</div>
+        <div>Asociación</div>
+      </ng-container>
+      <ng-template #visualType>
+        <ng-container *ngIf="selectedCategory === 2; else textualType">
+        </ng-container>
+      </ng-template>
+      <ng-template #visualType>
+        <ng-container *ngIf="selectedCategory === 2; else invalidType">
+        </ng-container>
+      </ng-template>
+      <ng-template #invalidType>
+        <div>Categoria inválida</div>
+      </ng-template>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #createCaptcha>
+  <ng-container *ngIf="inCreateCaptchaView">
+    <div>
+      <form [formGroup]="captchaForm">
+        <h1>Ingrese la información solicitada en cada ítem</h1>
+        <!-- Nombre del acertijo -->
+        <h4>Nombre del acertijo</h4>
+        <div>
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Escriba aquí..."
+              appearance="outline"
+              formControlName="name"
+              maxlength="100"
+            />
+            <mat-error *ngIf="captchaForm.controls.name.hasError('required')"
+              >El valor de este campo no es válido</mat-error
+            >
+          </mat-form-field>
+          <button matButton>Actualizar</button>
+        </div>
+
+        <mat-accordion multi>
+          <!-- Instrucción -->
+          <mat-expansion-panel
+            (opened)="instructionPanelOpen = true"
+            (closed)="instructionPanelOpen = false"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{
+                  !instructionPanelOpen
+                    ? "Zona de instrucción"
+                    : "Escriba la instrucción para la solución del acertijo"
+                }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-form-field>
+              <input
+                matInput
+                placeholder="Escriba aquí..."
+                appearance="outline"
+                formControlName="instruction"
+                maxlength="100"
+              />
+              <mat-error
+                *ngIf="captchaForm.controls.instruction.hasError('required')"
+                >El valor de este campo no es válido</mat-error
+              >
+            </mat-form-field>
+            <button matButton>Actualizar</button>
+          </mat-expansion-panel>
+          <!-- Contenido -->
+          <mat-expansion-panel
+            (opened)="contentPanelOpen = true"
+            (closed)="contentPanelOpen = false"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{
+                  !contentPanelOpen
+                    ? "Zona de contenido"
+                    : "Agregue las imágenes para la solución del acertijo"
+                }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <!-- <mat-form-field> -->
+            <input type="file" placeholder="Escriba aquí..." />
+            <!-- </mat-form-field> -->
+            <button matButton>Actualizar</button>
+          </mat-expansion-panel>
+          <!-- Ayuda usuario -->
+          <mat-expansion-panel
+            (opened)="helpPanelOpen = true"
+            (closed)="helpPanelOpen = false"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{
+                  !helpPanelOpen
+                    ? "Zona de apoyo al usuario"
+                    : "Agregue un archivo de audio como apoyo auditivo para la solución del acertijo."
+                }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <!-- <mat-form-field> -->
+            <input
+              type="file"
+              placeholder="Arrastrar y soltar aquí o navegar"
+            />
+            <!-- </mat-form-field> -->
+            <button matButton>Actualizar</button>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <button
+          matButton
+          [disabled]="captchaForm.invalid"
+          (click)="addCaptcha()"
+        >
+          Crear acertijo
+        </button>
+      </form>
+      <div>
+        <h1>Previsualización</h1>
+        <div class="previ-wrapper">
+          <div class="header">
+            <p>Titulo del acertijo</p>
+          </div>
+          <div class="body">
+            <div>Body</div>
+          </div>
+          <div class="bottom">Enviar</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>
+
+<button (click)="test()">Test</button>

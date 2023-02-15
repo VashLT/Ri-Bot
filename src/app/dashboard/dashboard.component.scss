@@ -1,0 +1,18 @@
+:host {
+    display: flex;
+    min-height: 100vh;
+    
+    background: rgb(217,217,217);
+    background: -moz-linear-gradient(180deg, rgba(217,217,217,1) 0%, rgba(217,217,217,0.5018382352941176) 25%, rgba(217,217,217,0) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(217,217,217,1) 0%, rgba(217,217,217,0.5018382352941176) 25%, rgba(217,217,217,0) 100%);
+    background: linear-gradient(180deg, rgba(217,217,217,1) 0%, rgba(217,217,217,0.5018382352941176) 25%, rgba(217,217,217,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#d9d9d9",endColorstr="#d9d9d9",GradientType=1);
+
+    & .dashboard-wrap {
+        width: 100%;
+    }
+
+    & .dashboard-content {
+        padding: 32px 32px 16px;
+    }
+}

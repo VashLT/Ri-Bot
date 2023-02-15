@@ -1,0 +1,14 @@
+@use '@angular/material' as mat;
+@import "./theme/theme.scss";
+
+$primary: mat.get-color-from-palette($primary-palette, default);
+$primary--hover: mat.get-color-from-palette($primary-palette, 300);
+$primary-400: #565C6E;
+$secondary: #BFA584;
+$secondary--hover: #ab9476;
+$tertiary: hsl(0, 0%, 85%);
+$tertiary--hover: hsl(0, 0%, 82%);
+$black: #1e1e1e;
+$disabled: hsl(0, 0%, 60%);
+$border-radius--button: 10px;
+$border-radius--button-main: 32px;

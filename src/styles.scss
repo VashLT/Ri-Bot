@@ -1,1 +1,113 @@
-/* You can add global styles to this file, and also import other style files */
+@import "variables";
+
+body {
+  margin: 0;
+  padding: 0;
+  & * {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  & div, & p, & h1, & h2, & h3, & h4 {
+    margin: 0;
+    font-family: 'Roboto Condensed', sans-serif !important;
+  }
+
+  /* width */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: $tertiary--hover;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: $primary;
+    width: 8px;
+    border-radius: 999px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: $primary--hover;
+  }
+}
+
+.mat-icon-button i, .mat-icon-button .mat-icon {
+  font-size: 32px;
+  line-height: 32px !important;
+  height: 32px;
+  width: 32px;
+}
+
+button {
+  border-radius: $border-radius--button;
+
+  &.primary, &.secondary {
+    --btn-height: 64px;
+    height: var(--btn-height);
+    padding: 0 32px;
+    transition: background-color 0.2s ease;
+    border-radius: $border-radius--button-main;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+    &:disabled {
+      background-color: $tertiary;
+      color: white !important;
+      pointer-events: none;
+    }
+
+    & .mat-button-wrapper {
+      font-size: 32px;
+      line-height: var(--btn-height);
+    }
+  }
+
+  &.primary {
+    background-color: $primary;
+    color: $tertiary;
+
+    &:hover { 
+      background-color: $primary--hover;
+    }
+  }
+
+  &.secondary {
+    background-color: $tertiary;
+    color: $primary;
+
+    &:hover { 
+      background-color: $tertiary--hover;
+    }
+  }
+}
+
+.ellipsis-2 {
+  margin: 0;
+  /**
+   * para textos largos (agrega '...'), a partir del 3er renglón
+   */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  @supports (-webkit-line-clamp: 2) {
+      display: -webkit-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: initial;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+  }
+}
+
+.btn-back {
+  background-color: $primary !important;
+  margin-bottom: 16px !important;
+  & mat-icon {
+    color: $tertiary;
+  }
+}
