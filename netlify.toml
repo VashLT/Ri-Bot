@@ -1,3 +1,3 @@
 [build]
-    base = "UIS"
+    publish = "dist/UIS"
     CI = "npm run build"
