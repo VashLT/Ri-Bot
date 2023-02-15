@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { DatabaseService } from '../../services/database.service';
 import { Project } from '../../models/project.model';
 import { Captcha } from '../../models/captcha.model';
@@ -12,13 +12,25 @@ export class ProjectComponent implements OnInit {
   project: Project;
   inCaptchaStatisticsView = false;
   captcha: Captcha;
+  addingCaptcha = false;
   constructor(
     public db: DatabaseService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    this.router.events.subscribe((ev) => {
+      if (ev instanceof NavigationEnd) {
+        if (!this.router.url.startsWith('/proyecto')) return;
+        this.checkUrl();
+      }
+    });
+  }
 
   ngOnInit(): void {
+    this.checkUrl();
+  }
+
+  checkUrl(): void {
     if (isNaN(Number(this.route.snapshot.paramMap.get('id')))) {
       alert('El proyecto al que intenta ir no existe');
       this.router.navigateByUrl('');
@@ -36,4 +48,5 @@ export class ProjectComponent implements OnInit {
 
     console.log('[INFO] In project', { project: this.project });
   }
+
 }

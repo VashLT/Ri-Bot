@@ -14,7 +14,7 @@
         >
       </mat-form-field>
     </div>
-    <div class="row">
+    <div class="row-field">
       <div class="field">
         <h3>Descripción del proyecto</h3>
         <mat-form-field appearance="outline">
@@ -28,19 +28,15 @@
       <div class="field">
         <h3>Imágen del proyecto</h3>
         <!-- <mat-form-field>
-          <input
-            type="file"
-            placeholder="Arrastrar y soltar aquí o navegar"
-            formControlName="projectImage"
-          />
         </mat-form-field> -->
+        <input type="file" placeholder="Escriba aquí..." />
       </div>
     </div>
     <div class="c-add-captcha">
       <h3>Agregar acertijo</h3>
       <div class="content">
         <div *ngFor="let captcha of captchas" class="c-captcha">
-          <div class="name" [alt]="captcha.name">
+          <div class="name" [title]="captcha.name">
             <p class="ellipsis-2">{{ captcha.name }}</p>
           </div>
           <span>
@@ -74,7 +70,9 @@
       </div>
     </div>
     <div class="c-actions">
-      <button mat-button class="secondary">Cancelar</button>
+      <button mat-button class="secondary" (click)="cancelProject()">
+        Cancelar
+      </button>
       <button
         mat-button
         class="primary"
@@ -98,8 +96,11 @@
       <mat-icon>west</mat-icon>
     </button>
     <h1 class="title">Seleccione la categoría del acertijo</h1>
-    <div class="c-category">
-      <div (click)="this.selectedCategory = 1" class="category">
+    <div class="c-category {{ this.selectedCategory ? 'selected' : '' }}">
+      <div
+        (click)="selectCategory(1)"
+        class="category {{ this.selectedCategory === 1 ? 'selected' : '' }}"
+      >
         <div class="header">
           <p class="ellipsis-2">Lúdicos</p>
         </div>
@@ -157,8 +158,50 @@
     </div>
     <ng-container *ngIf="selectedCategory">
       <ng-container *ngIf="selectedCategory === 1; else visualType">
-        <div (click)="this.inCreateCaptchaView = true">Posición</div>
-        <div>Asociación</div>
+        <hr style="margin: 16px 0" />
+        <h1 class="title" style="margin-top: 16px">
+          Seleccione el tipo de acertijo
+        </h1>
+        <div class="c-types">
+          <div
+            (click)="this.inCreateCaptchaView = true"
+            class="category {{ this.selectedCategory === 1 ? 'selected' : '' }}"
+          >
+            <div class="header">
+              <p class="ellipsis-2">Posición</p>
+            </div>
+            <div class="content">
+              <div class="c-pic">
+                <img src="/assets/images/image.png" />
+                <img src="/assets/images/image.png" />
+                <img src="/assets/images/image.png" />
+                <p>...</p>
+              </div>
+              <div class="row-pic">
+                <img src="/assets/images/image.png" />
+                <img src="/assets/images/image.png" />
+                <img src="/assets/images/image.png" />
+              </div>
+            </div>
+            <p>Se ubican los bloques en la posición respectiva</p>
+          </div>
+          <div class="category disabled">
+            <div class="header">
+              <p class="ellipsis-2">Asociación</p>
+            </div>
+            <div class="content on-boarding">
+              <div class="c-pic">
+                <img src="/assets/images/image.png" />
+                <div>A</div>
+              </div>
+            </div>
+            <div class="options">
+              <span>A</span>
+              <span>B</span>
+            </div>
+            <p>Se relaciona la imagen con la opción correcta</p>
+          </div>
+        </div>
       </ng-container>
       <ng-template #visualType>
         <ng-container *ngIf="selectedCategory === 2; else textualType">
@@ -177,17 +220,24 @@
 
 <ng-template #createCaptcha>
   <ng-container *ngIf="inCreateCaptchaView">
-    <div>
+    <button
+      class="btn-back"
+      mat-icon-button
+      (click)="this.inCreateCaptchaView = false"
+      title="Atrás"
+    >
+      <mat-icon>west</mat-icon>
+    </button>
+    <div class="wrapper-create-captcha">
       <form [formGroup]="captchaForm">
-        <h1>Ingrese la información solicitada en cada ítem</h1>
+        <h1 class="title">Ingrese la información solicitada en cada ítem</h1>
         <!-- Nombre del acertijo -->
         <h4>Nombre del acertijo</h4>
-        <div>
-          <mat-form-field>
+        <div class="field">
+          <mat-form-field appearance="outline">
             <input
               matInput
               placeholder="Escriba aquí..."
-              appearance="outline"
               formControlName="name"
               maxlength="100"
             />
@@ -195,14 +245,14 @@
               >El valor de este campo no es válido</mat-error
             >
           </mat-form-field>
-          <button matButton>Actualizar</button>
         </div>
 
-        <mat-accordion multi>
+        <mat-accordion>
           <!-- Instrucción -->
           <mat-expansion-panel
             (opened)="instructionPanelOpen = true"
             (closed)="instructionPanelOpen = false"
+            class="{{ instructionPanelOpen ? 'opened' : '' }}"
           >
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -213,11 +263,10 @@
                 }}
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <mat-form-field>
+            <mat-form-field appearance="outline" color="tertiary">
               <input
                 matInput
                 placeholder="Escriba aquí..."
-                appearance="outline"
                 formControlName="instruction"
                 maxlength="100"
               />
@@ -226,7 +275,12 @@
                 >El valor de este campo no es válido</mat-error
               >
             </mat-form-field>
-            <button matButton>Actualizar</button>
+            <button
+              mat-button
+              (click)="$event.preventDefault(); updateInstruction()"
+            >
+              Actualizar
+            </button>
           </mat-expansion-panel>
           <!-- Contenido -->
           <mat-expansion-panel
@@ -245,7 +299,7 @@
             <!-- <mat-form-field> -->
             <input type="file" placeholder="Escriba aquí..." />
             <!-- </mat-form-field> -->
-            <button matButton>Actualizar</button>
+            <button mat-button>Actualizar</button>
           </mat-expansion-panel>
           <!-- Ayuda usuario -->
           <mat-expansion-panel
@@ -267,28 +321,51 @@
               placeholder="Arrastrar y soltar aquí o navegar"
             />
             <!-- </mat-form-field> -->
-            <button matButton>Actualizar</button>
+            <button mat-button>Actualizar</button>
           </mat-expansion-panel>
         </mat-accordion>
 
         <button
-          matButton
+          mat-button
           [disabled]="captchaForm.invalid"
           (click)="addCaptcha()"
+          id="create-captcha"
+          class="primary create-captcha-btn"
+          title="Crear acertijo"
         >
           Crear acertijo
         </button>
       </form>
-      <div>
-        <h1>Previsualización</h1>
-        <div class="previ-wrapper">
+      <div class="wrapper-previsualization">
+        <h1 class="title">Previsualización</h1>
+        <div class="c-previsualization">
           <div class="header">
-            <p>Titulo del acertijo</p>
+            <p class="{{ !captchaInstruction ? 'empty' : '' }}">
+              {{
+                captchaInstruction ? captchaInstruction : "Titulo del acertijo"
+              }}
+            </p>
           </div>
-          <div class="body">
-            <div>Body</div>
+          <hr />
+          <div class="body active">
+            <div class="c-content">
+              <div *ngFor="let i of [].constructor(9)" class="c-image">
+                <mat-icon *ngIf="i !== 2 && i !== 4 && i !== 6">image</mat-icon>
+              </div>
+            </div>
+            <hr />
+            <div class="c-options">
+              <div *ngFor="let _ of [].constructor(3)" class="c-image">
+                <mat-icon>emoji_objects</mat-icon>
+              </div>
+            </div>
           </div>
-          <div class="bottom">Enviar</div>
+          <hr />
+          <div class="bottom">
+            <mat-icon>headset</mat-icon>
+            <button mat-button>Enviar</button>
+            <mat-icon>error</mat-icon>
+          </div>
         </div>
       </div>
     </div>

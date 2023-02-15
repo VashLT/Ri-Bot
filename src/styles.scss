@@ -55,7 +55,7 @@ button {
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 
     &:disabled {
-      background-color: $tertiary;
+      background-color: $tertiary !important;
       color: white !important;
       pointer-events: none;
     }
@@ -67,20 +67,20 @@ button {
   }
 
   &.primary {
-    background-color: $primary;
-    color: $tertiary;
+    background-color: $primary !important;
+    color: $tertiary !important;
 
     &:hover { 
-      background-color: $primary--hover;
+      background-color: $primary--hover !important;
     }
   }
 
   &.secondary {
-    background-color: $tertiary;
-    color: $primary;
+    background-color: $tertiary !important;
+    color: $primary !important;
 
     &:hover { 
-      background-color: $tertiary--hover;
+      background-color: $tertiary--hover !important;
     }
   }
 }
@@ -110,4 +110,10 @@ button {
   & mat-icon {
     color: $tertiary;
   }
+}
+
+
+.success-snackbar {
+  background-color: #4caf50 !important;
+  color: white !important;
 }

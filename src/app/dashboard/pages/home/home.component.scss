@@ -1,0 +1,46 @@
+@import '../../../../variables.scss';
+:host {
+    & .wrapper {
+        display: flex;
+        column-gap: 32px;
+        margin-bottom: 16px;
+        & main {
+            width: 70%;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 32px;
+
+            background-image: url("/assets/images/bg2.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-radius: 16px;
+
+            & h2 {
+                width: 50%;
+                font-size: 36px;
+                color: $primary;
+                font-weight: bold;
+            }
+
+            & p {
+                width: 50%;
+                font-size: 22px;
+                color: $primary;
+                font-weight: bold;
+            }
+
+            & hr {
+                width: 50%;
+                margin-left: 0;
+            }
+        }
+
+        & img {
+            width: 25%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+    }
+}

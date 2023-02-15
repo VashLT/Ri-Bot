@@ -24,11 +24,18 @@
       >
         <mat-icon>chevron_left</mat-icon>
       </button>
-      <a routerLink="/crear-proyecto">
+      <a
+        routerLink="/crear-proyecto"
+        class="{{ currentUrl === '/crear-proyecto' ? 'active' : '' }}"
+      >
         <mat-icon>edit</mat-icon>
         Crear proyectos
       </a>
-      <a style="margin-right: 16px" [matMenuTriggerFor]="projects">
+      <a
+        style="margin-right: 16px"
+        [matMenuTriggerFor]="projects"
+        [class]="currentUrl.startsWith('/proyecto') ? 'active' : ''"
+      >
         <mat-icon>visibility</mat-icon>
         Ver proyectos
         <mat-icon class="when-close">expand_more</mat-icon>
@@ -43,7 +50,9 @@
             *ngFor="let project of db.projects"
             mat-menu-item
             [routerLink]="'/proyecto/' + project.id"
+            class="ellipsis-2"
           >
+            <mat-icon>description</mat-icon>
             {{ project.name }}
           </button>
         </ng-container>

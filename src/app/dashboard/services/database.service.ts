@@ -22,11 +22,7 @@ export class DatabaseService {
 
   saveProject(project: Project) {
     let projects = this.getProjects();
-    if (!projects) {
-      projects = [project];
-    } else {
-      projects.push(project);
-    }
+    projects.push(project);
 
     this.projects = projects;
 

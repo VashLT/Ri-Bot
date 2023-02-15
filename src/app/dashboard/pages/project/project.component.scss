@@ -1,0 +1,214 @@
+@import '../../../../variables.scss';
+
+:host {
+    .title {
+        font-size: 48px;
+        margin-bottom: 16px;
+        color: $primary--400;
+    }
+
+    & main {
+        display: flex;
+        flex-direction: column;
+        & .row-title {
+            display: flex;
+            justify-content: space-between;
+
+            > h1 {
+                margin-left: 160px;
+            }
+        }
+
+        & .content {
+            background-color: $primary--400;
+            width: 100%;
+            height: 100%;
+            padding: 0 16px 16px;
+            border-radius: 8px;
+
+            & .photo {
+                height: 135px;
+                width: 135px;
+                transform: translateY(-68px);
+                background-color: $tertiary;
+                border-radius: 32px;
+                position: absolute;
+            }             
+
+            & .desc {
+                font-size: 24px;
+                margin: 0;
+                margin-top: 90px;
+                color: $tertiary;
+                width: 80%;
+                margin-bottom: 32px;
+                font-weight: normal;
+            }
+
+            & h3 {
+                font-size: 32px;
+                margin-bottom: 16px;
+                color: $tertiary;            }
+                font-weight: bold;
+
+            & hr {
+                margin-bottom: 16px;
+            }
+
+            & .wrapper-captcha {
+                position: relative;
+                display: flex;
+                flex-wrap: wrap;
+                column-gap: 32px;
+                row-gap: 16px;
+                width: 100%;
+                min-height: 200px;
+
+                & .c-captcha {
+                    flex: 0 0 50%;
+                    background-color: $primary;
+                    border-radius: 16px;
+                    padding: 20px;
+                    max-width: 340px;
+                    height: 170px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+
+                    & .row-header {
+                        display: flex;
+                        justify-content: space-between;
+
+                        & button {
+                            font-size: 16px !important;
+                            color: $tertiary;
+                            align-self: baseline;
+                            & mat-icon {
+                                margin-left: 8px;
+                                color: $tertiary;
+                                font-size: 24px;
+                                height: 24px;
+                                width: 24px;
+                                line-height: 24px;
+                            }
+                        }
+
+                        & .name {
+                            background-color: $tertiary;
+                            font-weight: bold;
+                            padding: 8px 16px;
+                            border-radius: 999px;
+                            margin-bottom: 36px;
+                            width: fit-content;
+        
+                            & p {
+                                color: $black;
+                                font-size: 18px;
+                                margin: 0;
+                            }
+        
+        
+                        }
+                    }
+    
+    
+                    & span {
+                        display: flex;
+                        align-items: baseline;
+                        width: 100%;
+                        color: white;
+                        & p {
+                            font-size: 16px;
+                            margin: 0;
+                        }
+    
+                        & em {
+                            font-style: normal;
+                            font-size: 48px;
+                            margin-left: auto;
+                        }
+                    }
+                }
+    
+                & .add-captcha {
+                    display: flex;
+                    position: absolute;
+    
+                    &.center {
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+    
+                        column-gap: 64px;
+    
+                        & button.action-btn {
+                            --icon-size: 44px;
+                            height: 128px;
+                            padding: 0 64px;
+    
+                            & ::ng-deep .mat-button-wrapper {
+                                font-size: 20px;
+                                color: white;
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                            }
+    
+                            & mat-icon {
+                                display: flex;
+                            }
+                        }
+                    }
+    
+                    &.side {
+                        right: 8px;
+                        bottom: 8px;
+                        column-gap: 16px;
+                        & button {
+                            &.add-btn {
+                                height: 64px !important;
+                                width: 64px !important;
+                            }
+    
+                            &.action-btn ::ng-deep .mat-button-wrapper {
+                                color: white;
+                            }
+                            --icon-size: 24px;
+                        }
+                    }
+    
+                    & button {
+                        --icon-size: 96px;
+                        border-radius: 16px;
+                        background-color: $secondary;
+                        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        
+                        & mat-icon {
+                            color: white;
+                            line-height: var(--icon-size) !important;
+                            height: var(--icon-size);
+                            width: var(--icon-size);
+                            font-size: var(--icon-size);
+                        }
+    
+                        &.add-btn {
+                            height: 128px;
+                            width: 128px;
+                        }
+    
+                        &.action-btn mat-icon {
+                            color: $primary;
+                        }
+    
+                        &:hover {
+                            background-color: $secondary--hover;
+                            transition: background-color 0.1s ease;
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+}

@@ -3,7 +3,7 @@
 
 $primary: mat.get-color-from-palette($primary-palette, default);
 $primary--hover: mat.get-color-from-palette($primary-palette, 300);
-$primary-400: #565C6E;
+$primary--400: #565C6E;
 $secondary: #BFA584;
 $secondary--hover: #ab9476;
 $tertiary: hsl(0, 0%, 85%);

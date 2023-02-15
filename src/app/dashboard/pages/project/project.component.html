@@ -1,24 +1,57 @@
 <ng-container *ngIf="!inCaptchaStatisticsView; else captchaStatistics">
   <main>
-    <div>
-      <h1>{{ project.name }}</h1>
+    <div class="row-title">
+      <h1 class="title">{{ project.name }}</h1>
       <button mat-button>Editar</button>
     </div>
     <div class="content">
-      <img src="" />
-      <ng-container *ngIf="project.description">
-        <p>{{ project.description }}</p>
-      </ng-container>
+      <img src="/assets/images/default_project_icon.png" class="photo" />
+      <p class="desc">{{ project.description }}</p>
       <h3>Acertijos asociados</h3>
       <hr />
-      <div>
-        <div *ngFor="let captcha of project.catpchas">
-          {{ captcha.name }}
+      <div class="wrapper-captcha">
+        <div *ngFor="let captcha of project.captchas" class="c-captcha">
+          <div class="row-header">
+            <div class="name" [title]="captcha.name">
+              <p class="ellipsis-2">{{ captcha.name }}</p>
+            </div>
+            <button mat-button>
+              Ver estadísticas<mat-icon>visibility</mat-icon>
+            </button>
+          </div>
+          <span>
+            <p>Número de respuestas</p>
+            <em>0</em>
+          </span>
         </div>
-        <button mat-icon-button><mat-icon>add</mat-icon>></button>
+        <div
+          class="add-captcha {{
+            project.captchas && project.captchas.length > 0 ? 'side' : 'center'
+          }}"
+        >
+          <ng-container *ngIf="addingCaptcha; else addButton">
+            <button class="action-btn" mat-button>
+              <mat-icon>library_add</mat-icon>
+              Acertijo nuevo
+            </button>
+            <button class="action-btn" mat-button>
+              <mat-icon>library_books</mat-icon>
+              Acertijo existente
+            </button>
+          </ng-container>
+          <ng-template #addButton>
+            <button
+              class="add-btn"
+              mat-icon-button
+              (click)="this.addingCaptcha = !this.addingCaptcha"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+          </ng-template>
+        </div>
       </div>
     </div>
-    <div>
+    <!-- <div>
       <h3>Datos del proyecto</h3>
       <div>
         <img src="" alt="graph" />
@@ -30,7 +63,7 @@
           <button mat-button>Generar informe</button>
         </div>
       </div>
-    </div>
+    </div> -->
   </main>
 </ng-container>
 
